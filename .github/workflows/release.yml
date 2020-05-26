@@ -1,0 +1,24 @@
+jobs:
+  main:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm ci
+      - run: npm pack
+      - id: pack_output
+        run: echo "::set-output name=output::$(npm run -s print-pack-output)"
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_content_type: application/gzip
+          asset_path: ${{ steps.pack_output.outputs.output }}
+          asset_name: ${{ steps.pack_output.outputs.output }}
+          upload_url: ${{ github.event.release.upload_url }}
+
+on:
+  release:
+    types:
+      - edited
+      - published
