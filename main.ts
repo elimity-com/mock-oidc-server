@@ -1,11 +1,6 @@
 #!/usr/bin/env node
 
-import {
-  ClientMetadata,
-  KoaContextWithOIDC,
-  Provider,
-  ResponseType,
-} from "oidc-provider";
+import { ClientMetadata, Provider, ResponseType } from "oidc-provider";
 import { options } from "yargs";
 
 const clientIdFlag = { demandOption: true, type: "string" } as const;
@@ -21,9 +16,6 @@ const { argv } = options(flags);
 const port = argv.port;
 const issuer = `http://localhost:${port}`;
 
-const openIdClaims = ["sub", "upn"];
-const claims = { openid: openIdClaims };
-
 const clientId = argv["client-id"];
 const grantTypes = ["implicit"];
 const redirectUri = argv["redirect-uri"];
@@ -38,17 +30,7 @@ const client: ClientMetadata = {
 };
 const clients = [client];
 
-const findAccount = (ctx: KoaContextWithOIDC, sub: string) => {
-  const claims = () => {
-    return { sub, upn: sub };
-  };
-  return {
-    accountId: sub,
-    claims,
-  };
-};
-
-const config = { claims, clients, findAccount, responseTypes };
+const config = { clients, responseTypes };
 const provider = new Provider(issuer, config);
 
 // ugly hack to allow redirects to localhost over http
