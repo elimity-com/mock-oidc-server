@@ -1,0 +1,39 @@
+{
+  "author": "Elimity development team",
+  "bin": {
+    "mock-oidc-server": "dist/main.js"
+  },
+  "bugs": {
+    "url": "https://github.com/elimity-com/mock-oidc-server/issues"
+  },
+  "dependencies": {
+    "oidc-provider": "^6.26.1",
+    "yargs": "^15.3.1"
+  },
+  "description": "Mock OpenID Connect server for testing purposes",
+  "devDependencies": {
+    "@types/yargs": "^15.0.5",
+    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/parser": "^3.0.1",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "homepage": "https://github.com/elimity-com/mock-oidc-server#readme",
+  "license": "Apache-2.0",
+  "name": "mock-oidc-server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elimity-com/mock-oidc-server.git"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .ts .",
+    "prettier": "prettier -c .",
+    "prepare": "tsc",
+    "print-pack-output": "ts-node print-pack-output.ts",
+    "start": "ts-node main.ts"
+  },
+  "version": "0.1.0-alpha"
+}
