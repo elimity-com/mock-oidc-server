@@ -8,34 +8,32 @@ import {
 } from "oidc-provider";
 import { options } from "yargs";
 
-const clientIdFlag = { demandOption: true, type: "string" } as const;
-const portFlag = { demandOption: true, type: "number" } as const;
-const redirectUriFlag = { demandOption: true, type: "string" } as const;
+const stringFlag = { demandOption: true, type: "string" } as const;
+const numberFlag = { demandOption: true, type: "number" } as const;
 const flags = {
-  "client-id": clientIdFlag,
-  port: portFlag,
-  "redirect-uri": redirectUriFlag,
+  "client-id": stringFlag,
+  "client-secret": stringFlag,
+  issuer: stringFlag,
+  port: numberFlag,
+  "redirect-uri": stringFlag,
 };
 const { argv } = options(flags);
-
-const port = argv.port;
-const issuer = `http://localhost:${port}`;
 
 const openIdClaims = ["sub", "upn"];
 const claims = { openid: openIdClaims };
 
 const clientId = argv["client-id"];
+const clientSecret = argv["client-secret"];
 const grantTypes = ["authorization_code"];
 const redirectUri = argv["redirect-uri"];
 const redirectUris = [redirectUri];
 const responseTypes: ResponseType[] = ["code"];
 const client: ClientMetadata = {
   client_id: clientId,
-  client_secret: "secret",
+  client_secret: clientSecret,
   grant_types: grantTypes,
   redirect_uris: redirectUris,
   response_types: responseTypes,
-  token_endpoint_auth_method: "none",
 };
 const clients = [client];
 
@@ -50,6 +48,6 @@ const findAccount = (ctx: KoaContextWithOIDC, sub: string) => {
 };
 
 const config = { claims, clients, findAccount, responseTypes };
-const provider = new Provider(issuer, config);
+const provider = new Provider(argv.issuer, config);
 
-provider.listen(port);
+provider.listen(argv.port);
