@@ -19,7 +19,7 @@ const flags = {
 };
 const { argv } = options(flags);
 
-const openIdClaims = ["sub", "upn"];
+const openIdClaims = ["email", "sub"];
 const claims = { openid: openIdClaims };
 
 const clientId = argv["client-id"];
@@ -39,7 +39,7 @@ const clients = [client];
 
 const findAccount = (ctx: KoaContextWithOIDC, sub: string) => {
   const claims = () => {
-    return { sub, upn: sub };
+    return { email: sub, sub };
   };
   return {
     accountId: sub,
