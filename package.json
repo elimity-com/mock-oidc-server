@@ -7,7 +7,7 @@
     "url": "https://github.com/elimity-com/mock-oidc-server/issues"
   },
   "dependencies": {
-    "oidc-provider": "^6.26.1",
+    "oidc-provider": "^8.1.0",
     "yargs": "^15.3.1"
   },
   "description": "Mock OpenID Connect server for testing purposes",
